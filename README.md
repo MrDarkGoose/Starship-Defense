@@ -1,5 +1,11 @@
 # Starship Defense
 
+<p align="center">
+  🌍 Languages: 
+  <a href="README.md">Українська</a> |
+  <a href="README_EN.md">English</a>
+</p>
+
 `Starship Defense` — це аркадна гра на `pygame`, у якій гравець керує зорельотом, знищує комети та захищає Землю від космічної загрози.
 
 ## Опис режимів
