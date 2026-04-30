@@ -7,6 +7,8 @@ import sys
 
 pygame.init()
 
+# parameters
+
 WIDTH = 1100
 HEIGHT = 700
 SIZE = 100
@@ -36,6 +38,8 @@ heartImg = pygame.transform.scale(heartImg, (40, 40))
 def enemyAngle(dx, speed):
     return -math.degrees(math.atan2(dx, speed))
 
+# enemy
+
 def createEnemy(speed):
     if random.random() < cornerEnemyChance:
         fromLeft = random.choice([True, False])
@@ -52,6 +56,8 @@ def moveEnemy(enemy, speed):
 
 def getEnemyRect(enemy):
     return pygame.Rect(int(enemy[0]), int(enemy[1]), enemyWidth, enemyHeight)
+
+# draw
 
 def drawEnemy(image, enemy):
     if len(enemy) > 2:
@@ -79,6 +85,8 @@ def drawEndPanel():
     rect = pygame.Rect(WIDTH // 2 - 275, HEIGHT // 2 - 80, 550, 160)
     pygame.draw.rect(screen, (12, 20, 34), rect, border_radius=16)
     pygame.draw.rect(screen, (90, 110, 140), rect, width=2, border_radius=16)
+
+#menu
 
 def showModeMenu():
     classicRect = pygame.Rect(WIDTH // 2 - 220, HEIGHT // 2 - 10, 200, 80)
@@ -136,6 +144,8 @@ def showModeMenu():
         pygame.display.flip()
         clock.tick(60)
 
+#classic game
+
 def runClassicGame():
     x, y = 435, 500
     speed = 7
@@ -165,7 +175,7 @@ def runClassicGame():
                 sys.exit()
 
         keys = pygame.key.get_pressed()
-
+        # status
         if gameState != "playing":
             if keys[pygame.K_SPACE]:
                 x, y = 435, 500
@@ -180,7 +190,7 @@ def runClassicGame():
                 gameState = "playing"
             if keys[pygame.K_ESCAPE]:
                 return
-
+        # controlls
         if gameState == "playing":
             if keys[pygame.K_LEFT]:
                 x -= speed
@@ -199,7 +209,7 @@ def runClassicGame():
                 y = 0
             if y + SIZE > HEIGHT:
                 y = HEIGHT - SIZE
-
+            # gameplay
             if invincibleTimer > 0:
                 invincibleTimer -= 1
 
@@ -283,6 +293,8 @@ def runClassicGame():
             drawCenteredLine("Game over!", HEIGHT // 2 - 28, (255, 110, 110), menuFont)
             drawCenteredLine("SPACE - restart, ESC - menu", HEIGHT // 2 + 28, (220, 230, 255))
         pygame.display.flip()
+
+#runs game
 
 def main():
     while True:

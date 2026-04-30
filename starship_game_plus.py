@@ -7,8 +7,9 @@ import pygame
 import json
 import hmac
 import math
-
 import sys
+
+# parameters
 
 WIDTH = 1100
 HEIGHT = 700
@@ -186,6 +187,8 @@ def loadAssets():
         "heart": heart,
     }
 
+# highscore/results/leaderboard
+
 def results():
     defaultData = {"highScore": 0, "runs": []}
     if saveFile.exists():
@@ -237,6 +240,8 @@ def recordRun(name, score):
     data["runs"].append({"name": (name.strip() or "Player")[:16], "score": int(score)})
     saveResults(max(int(score), data["highScore"]), data["runs"])
 
+# states
+
 def createState(highScore, playerName):
     return {
         "x": startX,
@@ -277,6 +282,8 @@ def createState(highScore, playerName):
         "boostDuration": boostDuration,
     }
 
+# controll
+
 def resetRound(state):
     state["x"] = startX
     state["y"] = startY
@@ -308,6 +315,8 @@ def finalizeRun(state):
     recordRun(state["playerName"], state["score"])
     state["runRecorded"] = True
 
+# buffs
+
 def spawnDrop(state, enemyX, enemyY):
     roll = random.random()
     if roll < state["heartChance"]:
@@ -337,6 +346,8 @@ def fireBullets(state):
         state["bullets"].append([rightX, state["y"] + 8])
     else:
         state["bullets"].append([centerX, state["y"]])
+
+# logic games
 
 def updateGame(state, keys):
     state["enemySpeed"] = state["baseEnemySpeed"] + state["score"] // enemyStep
@@ -439,6 +450,8 @@ def updateGame(state, keys):
         elif boost[1] > HEIGHT:
             state["doubleBoosts"].remove(boost)
 
+#draw
+
 def drawPickup(screen, pickup, color, label):
     rect = pygame.Rect(pickup[0], pickup[1], 28, 28)
     pygame.draw.rect(screen, color, rect, border_radius=8)
@@ -491,6 +504,8 @@ def drawGame(screen, assets, font, state, smallFont):
 
     pygame.display.flip()
 
+# plyer username
+
 def collectName(screen, clock, font, titleFont):
     name = ""
     inputRect = pygame.Rect(WIDTH // 2 - 220, HEIGHT // 2 - 10, 440, 64)
@@ -528,6 +543,8 @@ def collectName(screen, clock, font, titleFont):
 
         pygame.display.flip()
         clock.tick(FPS)
+
+# runs game
 
 def runGame(screen=None, clock=None):
     pygame.init()
